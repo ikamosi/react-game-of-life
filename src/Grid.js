@@ -3,7 +3,7 @@ import { makeGrid, generateNext, isEmpty } from './Util';
 
 const WIDTH = 30;
 const HEIGHT = 30;
-const SIMULATION_INTEVAL = 100;
+const SIMULATION_INTERVAL = 100;
 
 function Cell(props) {
   return (
@@ -37,7 +37,7 @@ function Grid() {
         else {
           setRows(generateNext(rows));
         }
-      }, SIMULATION_INTEVAL);
+      }, SIMULATION_INTERVAL);
       return () => clearTimeout(timeout);
     }
   }, [playing, rows]);
