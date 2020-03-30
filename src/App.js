@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { makeGrid, generateNext, isEmpty } from './Util';
+import { makeEmptyGrid, generateNext, isEmpty } from './utils';
 
 const WIDTH = 30;
 const HEIGHT = 30;
-const SIMULATION_INTERVAL = 100;
+const SIMULATION_INTEVAL = 100;
 
 function Cell(props) {
   return (
@@ -24,8 +24,18 @@ function Row(props) {
   );
 }
 
-function Grid() {
-  const [rows, setRows] = React.useState(makeGrid(WIDTH, HEIGHT));
+function Grid(props) {
+  return (
+    props.rows.map((row, i) => (
+      <div className="board-row" key={i}>
+        <Row y={i} data={row} onClick={props.onClick} />
+      </div>
+    ))
+  );
+}
+
+function App() {
+  const [rows, setRows] = React.useState(makeEmptyGrid(WIDTH, HEIGHT));
   const [playing, setPlaying] = React.useState(false);
 
   useEffect(() => {
@@ -37,14 +47,10 @@ function Grid() {
         else {
           setRows(generateNext(rows));
         }
-      }, SIMULATION_INTERVAL);
+      }, SIMULATION_INTEVAL);
       return () => clearTimeout(timeout);
     }
   }, [playing, rows]);
-
-  function togglePlaying() {
-    setPlaying(!playing);
-  }
 
   function handleClick(x, y) {
     let data = rows.map(row => row.slice());
@@ -52,26 +58,26 @@ function Grid() {
     setRows(data);
   }
 
+  function togglePlaying() {
+    setPlaying(!playing);
+  }
+
   function handleClear() {
-    setRows(makeGrid(WIDTH, HEIGHT));
+    setRows(makeEmptyGrid(WIDTH, HEIGHT));
     setPlaying(false);
   }
 
   return (
     <div>
-      {rows.map((row, i) => (
-        <div className="board-row" key={i}>
-          <Row y={i} data={row} onClick={handleClick} />
-        </div>
-      ))}
+      <Grid rows={rows} onClick={handleClick} />
       <button onClick={togglePlaying}>
         {playing ? "Stop" : "Play"}
       </button>
       <button onClick={handleClear}>
         Clear
-      </button>
+        </button>
     </div>
-  );
+  )    
 }
 
-export default Grid;
+export default App;
