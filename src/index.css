@@ -1,0 +1,26 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  height: 16px;
+  width: 16px;
+}
+
+.square-active {
+  background: #0aa;
+  border: 1px solid #999;
+  float: left;
+  height: 16px;
+  width: 16px;
+}
